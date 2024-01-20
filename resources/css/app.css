@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;900&display=swap');
+
+
+html .v-application{
+    background: #fafafa  !important;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.4) !important;
+    border-radius: 10px !important;
+    box-shadow: 8px 10px 30px rgba(0, 100, 0, 0.1) !important;
+    backdrop-filter: blur(0px) !important;
+    -webkit-backdrop-filter: blur(0px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.64) !important;
+}
+
+.glass-shadow{
+    box-shadow: 8px 10px 30px rgba(0, 100, 0, 0.1) !important;
+    backdrop-filter: blur(0px) !important;
+    -webkit-backdrop-filter: blur(0px) !important;
+}
+
+.glass-shadow-lg{
+    box-shadow: 8px 10px 30px rgba(23, 102, 175, 0.5) !important;
+    backdrop-filter: blur(0px) !important;
+    -webkit-backdrop-filter: blur(0px) !important;
+}
+
+.no-uppercase{
+    text-transform: unset !important;
+}
+
+.w-10{
+    width: 10% !important;
+}
+
+.w-80{
+    width: 80% !important;
+}
+
+/*@tailwind base;*/
+/*@tailwind components;*/
+/*@tailwind utilities;*/
