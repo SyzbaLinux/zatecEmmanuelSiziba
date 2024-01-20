@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthenticatedController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -17,26 +19,27 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('welcome');
+Route::get('/', [PagesController::class,'index'])->name('welcome');
+Route::get('/artists', [PagesController::class,'artists'])->name('artists');
+Route::post('/artists/{artist}/like', [PagesController::class,'artistLike'])->name('artistLike');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/albums', [PagesController::class,'albums'])->name('albums');
+Route::post('/albums/{album}/like', [PagesController::class,'albumLike'])->name('albumLike');
+
+
+
+require __DIR__.'/auth.php';
+Route::get('login/google', [GoogleController::class, 'redirectToGoogle'])->name('redirectToGoogle');
+Route::get('login/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+
+
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/dashboard',[AuthenticatedController::class,'dashboard'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
-
-require __DIR__.'/auth.php';
-
-Route::get('login/google', [GoogleController::class, 'redirectToGoogle'])->name('redirectToGoogle');
-Route::get('login/google/callback', [GoogleController::class, 'handleGoogleCallback']);
