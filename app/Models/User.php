@@ -46,4 +46,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+
+
+    public function favouriteArtists()
+    {
+        return $this->hasMany(FavouriteArtist::class);
+    }
+
+    public function favouriteAlbums()
+    {
+        return $this->hasMany(FavouriteAlbum::class);
+    }
+
 }

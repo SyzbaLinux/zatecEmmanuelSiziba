@@ -7,11 +7,10 @@ use App\Models\FavouriteArtist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
-use Barryvanveen\Lastfm\Lastfm;
 
 class AuthenticatedController extends Controller
 {
-    public static function dashboard(Lastfm $lastfm)
+    public static function dashboard()
     {
 
         $favArtists = FavouriteArtist::where('user_id',auth()->user()->id)->get();

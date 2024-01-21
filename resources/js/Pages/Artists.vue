@@ -4,7 +4,7 @@
 
   <v-container>
       <div class="glass pa-3">
-          <v-toolbar class="rounded-lg" elevation="0" color="white">
+          <div class="d-flex drounded-lg" elevation="0" color="white">
               <v-toolbar-title>
                   Artists List
               </v-toolbar-title>
@@ -14,16 +14,16 @@
               <v-text-field
                   placeholder="Search Artist by name"
                   v-model="searchQuery"
-                  hide-details
                   prepend-inner-icon="ph-magnifying-glass"
                   class="mx-1"
                   clearable
+                  :error-messages="$page.props.errors.search"
               />
 
               <v-btn  variant="flat" size="x-large" @click="search">
                   <v-icon icon="ph-magnifying-glass"></v-icon>
               </v-btn>
-          </v-toolbar>
+          </div>
 
 
 

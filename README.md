@@ -78,5 +78,19 @@ For demo data
 php artisan migrate --seed
 ```
 
-##Testing Users
-Register any user and test
+# Screenshots
+
+### Longed In User
+![Screenshot](Screenshot 2024-01-21 212429.png)
+
+### Albums List Page
+![Screenshot](Screenshot 2024-01-21 212503.png)
+
+### Search Results
+![Screenshot](Screenshot 2024-01-21 212549.png)
+
+### Welcome, Page
+![Screenshot](Screenshot 2024-01-21 212619.png)
+
+### Register Page
+![Screenshot](Screenshot 2024-01-21 212645.png)

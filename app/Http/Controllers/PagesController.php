@@ -10,6 +10,9 @@ use GuzzleHttp\Client;
 
 class PagesController extends Controller
 {
+
+    const LASTFM_API_KEY = '7b284c78cafbafe3a0ea58917b1079f3';
+
     public function index()
     {
         return Inertia::render('Welcome' );
@@ -18,15 +21,21 @@ class PagesController extends Controller
     public function artists(Request $request)
     {
 
+
+
         if(!$request->search){
 
             return Inertia::render('Artists');
 
         }else{
 
+            $request->validate([
+                'search' => 'required|min:3'
+            ]);
+
             $client = new Client();
 
-            $key    = env('LASTFM_API_KEY');
+            $key    = self::LASTFM_API_KEY;
             $search = $request->search;
 
             $response = $client->request('GET', "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist={$search}&api_key={$key}&format=json&limit=300");
@@ -45,15 +54,20 @@ class PagesController extends Controller
     public function albums(Request $request)
     {
 
+
         if(!$request->search){
 
             return Inertia::render('Albums');
 
         }else{
 
+            $request->validate([
+                'search' => 'required|min:3'
+            ]);
+
             $client = new Client();
 
-            $key    = env('LASTFM_API_KEY');
+            $key    = self::LASTFM_API_KEY;;
             $search = $request->search;
 
 
