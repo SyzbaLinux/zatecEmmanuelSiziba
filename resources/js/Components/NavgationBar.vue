@@ -51,6 +51,9 @@
             </v-btn>
         </InertiaLink>
 
+        <v-btn v-if="$page.props.auth.user" class="no-uppercase" @click="logout">
+           <v-icon>ph-sign-out</v-icon> Logout
+        </v-btn>
     </v-app-bar>
 </template>
 
@@ -69,6 +72,11 @@ export default {
     },
 
 
+    methods:{
+    logout(){
+        this.$inertia.visit(route('logout'),{method:'post'})
+    }
+}
 }
 </script>
 

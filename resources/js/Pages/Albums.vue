@@ -47,29 +47,27 @@
                       <v-data-table
                           :headers="headers"
                           :search="filter"
-                          :items="$page.props.artists"
+                          :items="$page.props.albums"
                       >
                           <template v-slot:item.image="{ item }">
-                              <!--                            {{ ImageURL(item) }}-->
-
                               <a :href="item.url" target="_blank">
                                   <v-img
-
-                                      src="/images/login.png"
+                                      :src="item.image[3]['#text']"
                                       class="glass ma-2"
+                                      height="80"
+                                      width="80"
                                   />
                               </a>
                           </template>
 
                           <template v-slot:item.actions="{ item }">
 
-                              <v-btn @click="likeUser(item)" variant="flat" color="primary" class="no-uppercase mx-1"  >
+                              <v-btn @click="likeAlbum(item)" variant="flat" color="primary" class="no-uppercase mx-1"  >
                                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path fill="currentColor" d="M240 94c0 70-103.79 126.66-108.21 129a8 8 0 0 1-7.58 0C119.79 220.66 16 164 16 94a62.07 62.07 0 0 1 62-62c20.65 0 38.73 8.88 50 23.89C139.27 40.88 157.35 32 178 32a62.07 62.07 0 0 1 62 62"/></svg>
-                                  Add to Favorites
                               </v-btn>
 
                               <v-btn variant="tonal" color="primary" class="no-uppercase mx-1"   :href="item.url" target="_blank">
-                                  View Profile
+                                  View
                               </v-btn>
                           </template>
                       </v-data-table>
@@ -106,7 +104,6 @@ export default {
             headers: [
                 {title: 'Image', key: 'image'},
                 {title: 'Artist Name', key: 'name'},
-                {title: 'Listeners', key: 'listeners'},
                 {title: 'More', key: 'actions', sortable: false},
             ]
         }
@@ -117,13 +114,9 @@ export default {
             this.$inertia.visit(route('albums', {search: this.searchQuery}))
         },
 
-        ImageURL(item) {
+        likeAlbum(album) {
 
-            return item.image[0]
-        },
-
-        likeUser() {
-
+            this.$inertia.post(route('albumLike'),album )
         }
     },
 }

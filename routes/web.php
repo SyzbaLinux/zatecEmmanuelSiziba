@@ -21,10 +21,14 @@ use Inertia\Inertia;
 
 Route::get('/', [PagesController::class,'index'])->name('welcome');
 Route::get('/artists', [PagesController::class,'artists'])->name('artists');
-Route::post('/artists/{artist}/like', [PagesController::class,'artistLike'])->name('artistLike');
+Route::post('/artists/like', [PagesController::class,'artistLike'])
+    ->middleware('auth')
+    ->name('artistLike');
 
 Route::get('/albums', [PagesController::class,'albums'])->name('albums');
-Route::post('/albums/{album}/like', [PagesController::class,'albumLike'])->name('albumLike');
+Route::post('/albums/like', [PagesController::class,'albumLike'])
+    ->middleware('auth')
+    ->name('albumLike');
 
 
 

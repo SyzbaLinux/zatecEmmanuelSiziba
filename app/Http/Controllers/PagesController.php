@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\FavouriteAlbum;
 use App\Models\FavouriteArtist;
-use Barryvanveen\Lastfm\Lastfm;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use GuzzleHttp\Client;
@@ -15,7 +14,6 @@ class PagesController extends Controller
     {
         return Inertia::render('Welcome' );
     }
-
 
     public function artists(Request $request)
     {
@@ -31,40 +29,18 @@ class PagesController extends Controller
             $key    = env('LASTFM_API_KEY');
             $search = $request->search;
 
-//        $response = $client->request('GET', "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist={$search}&api_key={$key}&format=json");
-//
-//        $data = json_decode($response->getBody()->getContents(), true);
+            $response = $client->request('GET', "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist={$search}&api_key={$key}&format=json&limit=300");
+            $data = json_decode($response->getBody()->getContents(), true);
 
-
-            $data = [
-
-                [
-                    "name"         => "Adriana Calcanhotto",
-                    "listeners"   => "368702",
-                    "mbid"        => "bd4d397a-849a-48bf-be24-52eec87feeee",
-                    "url"         => "https://www.last.fm/music/Adriana+Calcanhotto",
-                    "streamable"  => "0",
-                    "image"       =>
-                        [
-                            [
-                                "#text" =>"https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png",
-                                "size"  => "medium"
-                            ]
-                        ]
-                ]
-            ];
 
             return Inertia::render('Artists',[
                 'search'  => $search,
-                'artists' => $data
-                //'artists' => $data['results']['artistmatches']['artist']
+                 'artists' => $data['results']['artistmatches']['artist']
             ]);
         }
 
 
     }
-
-
 
     public function albums(Request $request)
     {
@@ -80,50 +56,24 @@ class PagesController extends Controller
             $key    = env('LASTFM_API_KEY');
             $search = $request->search;
 
-//        $response = $client->request('GET', "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist={$search}&api_key={$key}&format=json");
-//
-//        $data = json_decode($response->getBody()->getContents(), true);
 
-
-            $data = [
-
-                [
-                    "name"         => "Adriana Calcanhotto",
-                    "listeners"   => "368702",
-                    "mbid"        => "bd4d397a-849a-48bf-be24-52eec87feeee",
-                    "url"         => "https://www.last.fm/music/Adriana+Calcanhotto",
-                    "streamable"  => "0",
-                    "image"       =>
-                        [
-                            [
-                                "#text" =>"https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png",
-                                "size"  => "medium"
-                            ]
-                        ]
-                ]
-            ];
+            $response = $client->request('GET', "https://ws.audioscrobbler.com/2.0/?method=album.search&api_key={$key}&album={$search}&format=json&limit=300");
+            $data = json_decode($response->getBody()->getContents(),true);
 
             return Inertia::render('Albums',[
                 'search'  => $search,
-                'albums' => $data
-                //'artists' => $data['results']['artistmatches']['artist']
+                'albums' => $data['results']['albummatches']['album']
             ]);
         }
 
     }
 
-
-
-    public function artistLike($id){
-
-
+    public function artistLike(Request $request){
         //check if the user already liked this and remove the like
 
         $check = FavouriteArtist::where('user_id',auth()->user()->id)
-                                ->where('artist_id',$id)
+                                ->where('artist_name',$request->name)
                                 ->first();
-
-
         if($check){
             //remove from list
             $check->delete();
@@ -138,8 +88,11 @@ class PagesController extends Controller
             //Add artist to favourites
             $favourite = new FavouriteArtist();
 
-            $favourite->user_id   = auth()->user()->id;
-            $favourite->artist_id = $id;
+            $favourite->user_id     = auth()->user()->id;
+            $favourite->artist_name = $request->name;
+            $favourite->url         = $request->url;
+            $favourite->mbid        = $request->mbid;
+            $favourite->image       = $request->image[3]['#text']; //index 3 for large quality
             $favourite->save();
 
             return back()->with('message',[
@@ -151,14 +104,13 @@ class PagesController extends Controller
 
     }
 
+    public function albumLike(Request $request){
 
-    public function albumLike($id){
         //check if the user already liked this and remove the like
 
         $check = FavouriteAlbum::where('user_id',auth()->user()->id)
-            ->where('artist_id',$id)
+            ->where('album_name',$request->name)
             ->first();
-
 
         if($check){
             //remove from list
@@ -174,8 +126,11 @@ class PagesController extends Controller
             //Add artist to favourites
             $favourite = new FavouriteAlbum();
 
-            $favourite->user_id   = auth()->user()->id;
-            $favourite->artist_id = $id;
+            $favourite->user_id     = auth()->user()->id;
+            $favourite->album_name  = $request->name;
+            $favourite->url         = $request->url;
+            $favourite->mbid        = $request->mbid;
+            $favourite->image       = $request->image[3]['#text']; //index 3 for large quality
             $favourite->save();
 
             return back()->with('message',[

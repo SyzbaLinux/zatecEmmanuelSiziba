@@ -4,9 +4,11 @@
         <title>Welcome</title>
     </PageHead>
 
-    <div>
-        Page Content
-    </div>
+    <v-card class="mx-auto glass" max-width="550">
+        <v-card-title class="text-center text-h5">
+            Welcome
+        </v-card-title>
+    </v-card>
 </template>
 
 <script>

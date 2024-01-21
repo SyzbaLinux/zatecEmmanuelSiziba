@@ -35,9 +35,6 @@ export default createVuetify({
             variant: 'flat',
             color: 'primary',
         },
-        VCard: {
-            rounded: 'lg'
-        },
         VTextField: {
             variant: 'outlined',
             density: 'comfortable',

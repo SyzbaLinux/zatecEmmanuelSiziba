@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('favourite_albums', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->text('albums_id');
+            $table->string('album_name');
+            $table->string('url');
+            $table->string('mbid')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
