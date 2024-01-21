@@ -22,7 +22,7 @@ Full-stack Coding Assessment
 
 Clone repo locally
 ```bash
-composer install 
+ git clone https://github.com/SyzbaLinux/zatecEmmanuelSiziba
 ```
 
 Install PHP Dependencies
@@ -52,7 +52,7 @@ yarn install
 Build assets for production
 
 ```bash
-npm run prod
+npm run build
 ```
 
 Setup Configuration
@@ -79,11 +79,4 @@ php artisan migrate --seed
 ```
 
 ##Testing Users
-
-If the database is seeded the default users are as follows
-- admin@example.com
-- student@example.com
-- instructor@example.com
-- Password 12345678
-
-These users are for testing purposes only.
+Register any user and test
