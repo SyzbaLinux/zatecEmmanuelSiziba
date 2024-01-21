@@ -1,6 +1,6 @@
 # HarmonyHub
 
-Full-stack Coding Assessment
+Full-stack Coding Assessment response by Emmanuel Siziba
  
 ## Technologies Used
 
