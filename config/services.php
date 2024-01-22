@@ -32,9 +32,14 @@ return [
     ],
 
     'google' => [
-        'client_id' => env('YOUR_GOOGLE_CLIENT_ID'),
-        'client_secret' => env('YOUR_GOOGLE_CLIENT_SECRET'),
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => 'http://localhost:8000/login/google/callback', // Update with your callback URL
+    ],
+
+    'lastfm' => [
+        'lastfm_api_key' => env('LASTFM_API_KEY'),
+        'lastfm_shared_secrete' => env('LAST_SHARED_SECRET'),
     ],
 
 ];

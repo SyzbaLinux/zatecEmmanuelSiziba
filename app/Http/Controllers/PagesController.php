@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\FavouriteAlbum;
 use App\Models\FavouriteArtist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Inertia\Inertia;
 use GuzzleHttp\Client;
 
 class PagesController extends Controller
 {
 
-    const LASTFM_API_KEY = '7b284c78cafbafe3a0ea58917b1079f3';
 
     public function index()
     {
@@ -35,7 +35,7 @@ class PagesController extends Controller
 
             $client = new Client();
 
-            $key    = self::LASTFM_API_KEY;
+            $key    = Config::get('services.lastfm.lastfm_api_key');;
             $search = $request->search;
 
             $response = $client->request('GET', "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist={$search}&api_key={$key}&format=json&limit=300");
@@ -67,7 +67,7 @@ class PagesController extends Controller
 
             $client = new Client();
 
-            $key    = self::LASTFM_API_KEY;;
+            $key    = Config::get('services.lastfm.lastfm_api_key');
             $search = $request->search;
 
 
