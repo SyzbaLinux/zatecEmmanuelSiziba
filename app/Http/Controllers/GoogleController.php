@@ -49,7 +49,11 @@ class GoogleController extends Controller
 
             } catch (Exception $e) {
 
-                dd($e->getMessage());
+            return back()->with('message',[
+                'type'           => 'error',
+                'description'    => ''.$e->getMessage(),
+                'title'          => 'Google login failed',
+            ]);
         }
 
 
